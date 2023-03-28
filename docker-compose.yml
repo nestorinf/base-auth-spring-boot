@@ -1,0 +1,20 @@
+version: '3'
+services:
+  base-authencation-api:
+    build:
+      context: .
+      dockerfile: ./docker/development.DockerFile
+    ports:
+      - 8050:8050
+      - 35730:35729
+      - 5006:5005
+    environment:
+      - SERVER_PORT=8050
+    volumes:
+      - ./src/:/app/src:rw
+    command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    networks:
+      - Webdevelopment
+networks:
+  Webdevelopment:
+    external: true
